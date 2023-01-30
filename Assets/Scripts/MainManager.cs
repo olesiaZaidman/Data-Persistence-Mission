@@ -6,71 +6,92 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
+    [Header("Brick Wall")]
     public Brick BrickPrefab;
-    public int LineCount = 6;
+    public int lineCount = 6;
+
+    [Header("Ball")]
     public Rigidbody Ball;
 
+    [Header("UI")]
     public Text ScoreText;
     public GameObject GameOverText;
-    
-    private bool m_Started = false;
-    private int m_Points;
-    
-    private bool m_GameOver = false;
+
+    private int points;
+
+    private bool isGameStarted = false;
+    private bool isGameOver = false;
 
     
-    // Start is called before the first frame update
     void Start()
+    {
+        CreateBrickWall();
+    }
+
+   public void CreateBrickWall()
     {
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        
-        int[] pointCountArray = new [] {1,1,2,2,5,5};
-        for (int i = 0; i < LineCount; ++i)
+
+        int[] pointCountArray = new[] { 1, 1, 2, 2, 5, 5 };
+        for (int i = 0; i < lineCount; ++i)
         {
             for (int x = 0; x < perLine; ++x)
             {
                 Vector3 position = new Vector3(-1.5f + step * x, 2.5f + i * 0.3f, 0);
                 var brick = Instantiate(BrickPrefab, position, Quaternion.identity);
-                brick.PointValue = pointCountArray[i];
-                brick.onDestroyed.AddListener(AddPoint);
+                brick.pointValue = pointCountArray[i];
+                brick.onDestroyed.AddListener(AddPoint); //in Brick script:  onDestroyed.Invoke(pointValue);
+                //every brick has its point value
+                //and brick has  an Event   public UnityEvent<int> onDestroyed;
             }
         }
     }
 
     private void Update()
     {
-        if (!m_Started)
+        if (!isGameStarted)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                m_Started = true;
-                float randomDirection = Random.Range(-1.0f, 1.0f);
-                Vector3 forceDir = new Vector3(randomDirection, 1, 0);
-                forceDir.Normalize();
+                ForceBallMovementIfNewGame();
+            }
+        }
+        else if (isGameOver) //DeathZone defines gameOver condition
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                RestartGame();
+            }
+        }
+    }
 
-                Ball.transform.SetParent(null);
-                Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
-            }
-        }
-        else if (m_GameOver)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-        }
+    void ForceBallMovementIfNewGame()
+    {
+        isGameStarted = true;
+        float randomDirection = Random.Range(-1.0f, 1.0f);
+        Vector3 forceDir = new Vector3(randomDirection, 1, 0);
+        forceDir.Normalize();
+
+        Ball.transform.SetParent(null);
+        Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
+    }
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void AddPoint(int point)
     {
-        m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        points += point;
+        ScoreText.text = $"Score : {points}";
     }
 
-    public void GameOver()
+    public void GameOver() //DeathZone calls this method
     {
-        m_GameOver = true;
+        isGameOver = true;
         GameOverText.SetActive(true);
     }
+
 }

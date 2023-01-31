@@ -22,8 +22,6 @@ public class MainManager : MonoBehaviour
     private bool isGameOver = false;
     MenuUIHandler bestScoreUi;
 
-
-
     private void Awake()
     {
       bestScoreUi = FindObjectOfType<MenuUIHandler>();

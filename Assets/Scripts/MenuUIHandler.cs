@@ -22,11 +22,8 @@ public class MenuUIHandler : MonoBehaviour
 
     void Start()
     {
-     //   if (UIScoreManager.Instance.isBestScoreSaved)
-      //  { 
-            ShowBestPlayerScoreUIInfo();
-     //   }
 
+        ShowBestPlayerScoreUIInfo();
     }
 
     public string StoreName()
@@ -70,14 +67,12 @@ public class MenuUIHandler : MonoBehaviour
     public void NewBestScoreSaved(int _score)
     {
         UIScoreManager.Instance.bestScore = _score;
-        UIScoreManager.Instance.isBestScoreSaved = true;
     }
 
     public void OnStartButtonClick()
     {
         int mainScene = 1;
         CurentPlayerNameSelected(StoreName());
-      //  NewBestPlayerNameSelected(StoreName()); 
         StartCoroutine(LoadGameRoutine(sceneLoadDelay, mainScene));
     }
 
@@ -93,21 +88,19 @@ public class MenuUIHandler : MonoBehaviour
         StartCoroutine(LoadGameRoutine(sceneLoadDelay, startScene));
     }
 
+    public void OnQuitToRatingButtonClick()
+    {
+        int ratingScene = 2;
+        StartCoroutine(LoadGameRoutine(sceneLoadDelay, ratingScene));
+    }
+
     public void OnExitButtonClick()
     {
         UIScoreManager.Instance.SavePlayerData();
-
-        /*When the code is compiled inside the Editor then UNITY_EDITOR is true, 
-      * it will keep the EditorApplication.ExitPlaymode() code and discard the Application.Quit.*/
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
-        Application.Quit(); // original code to quit Unity player
 #endif
-
-        /*When you build a player, 
-         * UNITY_EDITOR will be false, and so it will keep Application.Quit()
-         * and discard EditorApplication.ExitPlaymode() !*/
     }
 
 }

@@ -18,13 +18,20 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
 
     private int points;
-
     private bool isGameStarted = false;
     private bool isGameOver = false;
+    MenuUIHandler bestScoreUi;
 
-    
+
+
+    private void Awake()
+    {
+      bestScoreUi = FindObjectOfType<MenuUIHandler>();
+    }
+
     void Start()
     {
+        bestScoreUi.ShowBestPlayerScoreUIInfo();
         CreateBrickWall();
     }
 
@@ -86,10 +93,17 @@ public class MainManager : MonoBehaviour
     {
         points += point;
         ScoreText.text = $"Score : {points}";
+
+        if (points > UIScoreManager.Instance.bestScore)
+        {
+            bestScoreUi.NewBestPlayerNameSaved(MenuUIHandler.currentPlayerName);//to acces static variable put the class!
+            bestScoreUi.NewBestScoreSaved(points);
+        }
     }
 
     public void GameOver() //DeathZone calls this method
     {
+        bestScoreUi.ShowBestPlayerScoreUIInfo();
         isGameOver = true;
         GameOverText.SetActive(true);
     }

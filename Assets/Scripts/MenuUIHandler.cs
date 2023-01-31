@@ -11,42 +11,86 @@ using TMPro;
 public class MenuUIHandler : MonoBehaviour
 {
     [Header("UI")]
-    public string playerName;
     public TextMeshProUGUI inputField;
-    public Text textDisplay;
     [SerializeField] [Range(0f, 2f)] float sceneLoadDelay;
-    //public string bestScore;
 
     [Header("BestScore")]
-    public GameObject bestScoreUi;
     public Text bestPlayerName;
     public Text bestScore;
 
-    void Awake()
+    public static string currentPlayerName;
+
+    void Start()
     {
-        if (UIScoreManager.Instance.isBestScoreSaved)
-        { bestScoreUi.SetActive(true); }
-        else
-            bestScoreUi.SetActive(false);
+     //   if (UIScoreManager.Instance.isBestScoreSaved)
+      //  { 
+            ShowBestPlayerScoreUIInfo();
+     //   }
+
     }
 
-    public void StoreName()
+    public string StoreName()
     {
-        playerName = inputField.text;
-        UIScoreManager.Instance.bestScorePlayerName = playerName;
-        textDisplay.text = UIScoreManager.Instance.bestScorePlayerName;
+        string playerName = inputField.text;
+        return playerName;
+    }
+
+
+    public void DisplayBestPlayerName(string _name)
+    {
+        bestPlayerName.text = _name;
+    }
+
+    public void DisplayScore(int _score)
+    {
+        bestScore.text = _score.ToString();
+    }
+
+    public void ShowBestPlayerScoreUIInfo()
+    {
+        if (UIScoreManager.Instance != null)
+        {
+            DisplayBestPlayerName(UIScoreManager.Instance.bestScorePlayerName);
+            DisplayScore(UIScoreManager.Instance.bestScore);
+        }
+    }
+
+
+    public void NewBestPlayerNameSaved(string _name)
+    {
+        UIScoreManager.Instance.bestScorePlayerName = _name;
+    }
+
+    public void CurentPlayerNameSelected(string _name)
+    {
+        currentPlayerName = _name;
+    }
+
+
+    public void NewBestScoreSaved(int _score)
+    {
+        UIScoreManager.Instance.bestScore = _score;
+        UIScoreManager.Instance.isBestScoreSaved = true;
     }
 
     public void OnStartButtonClick()
     {
-        StoreName();
-        StartCoroutine(LoadGameRoutine(sceneLoadDelay));
+        int mainScene = 1;
+        CurentPlayerNameSelected(StoreName());
+      //  NewBestPlayerNameSelected(StoreName()); 
+        StartCoroutine(LoadGameRoutine(sceneLoadDelay, mainScene));
     }
 
-    IEnumerator LoadGameRoutine(float _delay)
+    IEnumerator LoadGameRoutine(float _delay, int _scene)
     {
         yield return new WaitForSeconds(_delay);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(_scene);
+    }
+
+    public void OnMenuButtonClick()
+    {
+        int startScene = 0;
+        StartCoroutine(LoadGameRoutine(sceneLoadDelay, startScene));
     }
 
     public void OnExitButtonClick()
@@ -66,23 +110,4 @@ public class MenuUIHandler : MonoBehaviour
          * and discard EditorApplication.ExitPlaymode() !*/
     }
 
-
-
-
-    //private void Start()
-    //{
-    //    if (MainManager.Instance != null)
-    //    {
-    //        SetName(MainManager.Instance.TeamColor);
-    //    }
-    //}
-
-    //void SetName(string n)
-    //{
-    //    var colorHandler = GetComponentInChildren<ColorHandler>();
-    //    if (colorHandler != null)
-    //    {
-    //        colorHandler.SetColor(n);
-    //    }
-    //}
 }

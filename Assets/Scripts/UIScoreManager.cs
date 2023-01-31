@@ -11,6 +11,10 @@ public class UIScoreManager : MonoBehaviour
     public int bestScore;
     public bool isBestScoreSaved = false; //when we save it
 
+
+    //currentplayer
+    //currentScore?
+
     void Awake()
     {
         if (Instance != null)

@@ -39,8 +39,21 @@ public class MenuUIHandler : MonoBehaviour
     {
         if (HighScoreManager.Instance != null)
         {
-            DisplayBestPlayerName(HighScoreManager.Instance.bestScorePlayerName);
-            DisplayScore(HighScoreManager.Instance.bestScore);
+             HighScoreElement topPlayer = HighScoreHandler.GetTopPlayer();
+
+            if (topPlayer != null)
+            {
+                HighScoreManager.Instance.bestScorePlayerName = topPlayer.playerName;
+                HighScoreManager.Instance.bestScore = topPlayer.score;
+                DisplayBestPlayerName(HighScoreManager.Instance.bestScorePlayerName);
+                DisplayScore(HighScoreManager.Instance.bestScore);
+            }
+            //else
+            //{
+            //    DisplayBestPlayerName("");
+            //    DisplayScore(0);
+            //}
+
         }
     }
 

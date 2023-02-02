@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 234395773}
   - component: {fileID: 234395772}
   m_Layer: 0
-  m_Name: SaveDataHandler
+  m_Name: SaveBestPlayerDataHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -939,7 +939,7 @@ GameObject:
   - component: {fileID: 1097071702}
   - component: {fileID: 1097071701}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: NameInputField (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1489,6 +1489,67 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &1800494067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1800494069}
+  - component: {fileID: 1800494068}
+  - component: {fileID: 1800494070}
+  m_Layer: 0
+  m_Name: InputHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1800494068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800494067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ced38f67fa8267418a6602b33080354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input:
+    playerName: 
+    score: 0
+--- !u!4 &1800494069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800494067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 522.565, y: 242.80902, z: 9.442062}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1800494070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800494067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb3eeda22b0e514b9fc8207338ad37e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputField: {fileID: 1265235942}
 --- !u!1 &1877490028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,8 +1721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19612fd28aa3afe41b3ef82eb95beab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 1265235942}
-  sceneLoadDelay: 0.6
+  sceneLoadDelay: 0.5
   bestPlayerName: {fileID: 511792653}
   bestScore: {fileID: 511792652}
 --- !u!4 &6512848090780816656

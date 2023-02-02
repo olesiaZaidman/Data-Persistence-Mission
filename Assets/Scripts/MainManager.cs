@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
+
+   // public ScoreManager scoreManager;
+
     [Header("Brick Wall")]
     public Brick BrickPrefab;
     public int lineCount = 6;

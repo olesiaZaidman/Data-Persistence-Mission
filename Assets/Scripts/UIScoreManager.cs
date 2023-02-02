@@ -31,11 +31,16 @@ public class UIScoreManager : MonoBehaviour
         public int bestScore;
     }
 
+
+
     public void SavePlayerData()
     {
         SaveData data = new SaveData();
         data.bestScorePlayerName = bestScorePlayerName;
         data.bestScore = bestScore;
+
+       // data.bestScores = bestScores;
+
         string json = JsonUtility.ToJson(data);
         // json now contains: '{"bestScorePlayerName":bestScorePlayerName,"bestScore":bestScore}'
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
@@ -53,4 +58,6 @@ public class UIScoreManager : MonoBehaviour
             bestScore = data.bestScore;
         }
     }
+
+
 }

@@ -90,6 +90,14 @@ public class MenuUIHandler : MonoBehaviour
 
     public void OnQuitToRatingButtonClick()
     {
+        string curName = UIScoreManager.Instance.bestScorePlayerName;
+        int curScore = UIScoreManager.Instance.bestScore;
+        //new ScoreEntry(curName, curScore)
+        ScoreManager.Instance.scores.Add(ScoreManager.Instance.AddScoreEntry(curName, curScore));
+
+        Debug.Log("List Size: " + ScoreManager.Instance.scores.Count); //ScoreManager.Instance.scores.Count
+        ScoreManager.Instance.scores.ForEach(i => Debug.Log(i)); //prints all the values of the list
+
         int ratingScene = 2;
         StartCoroutine(LoadGameRoutine(sceneLoadDelay, ratingScene));
     }
@@ -97,6 +105,7 @@ public class MenuUIHandler : MonoBehaviour
     public void OnExitButtonClick()
     {
         UIScoreManager.Instance.SavePlayerData();
+
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else

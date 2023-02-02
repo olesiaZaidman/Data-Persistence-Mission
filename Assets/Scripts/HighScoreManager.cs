@@ -4,11 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class UIScoreManager : MonoBehaviour
+public class HighScoreManager : MonoBehaviour
 {
-    public static UIScoreManager Instance;
+    public static HighScoreManager Instance;
     public string bestScorePlayerName;
     public int bestScore;
+    public static string currentPlayerName;
+    int _currentScore;
+
+    public int CurrentScore
+    {
+        get { return _currentScore; }
+        set { _currentScore = value; }
+    }
 
     void Awake()
     {
@@ -21,6 +29,31 @@ public class UIScoreManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         LoadPlayerData();
+    }
+
+
+    public void NewBestPlayerNameSaved(string _name)
+    {
+        bestScorePlayerName = _name;
+    }
+
+    public void CurentPlayerNameSelected(string _name)
+    {
+        currentPlayerName = _name;
+    }
+
+    public void NewBestScoreSaved(int _score)
+    {
+       bestScore = _score;
+    }
+
+    public void SetHighScoreIfGreater(int _score)
+    {
+        if (_score > bestScore)
+        {
+           NewBestPlayerNameSaved(currentPlayerName);//to acces static variable put the class!
+           NewBestScoreSaved(_score);
+        }
     }
 
 

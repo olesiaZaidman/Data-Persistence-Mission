@@ -10,28 +10,20 @@ using TMPro;
 
 public class MenuUIHandler : MonoBehaviour
 {
+   private InputUINameSaver inputNameSaver;
+
     [Header("UI")]
-    public TextMeshProUGUI inputField;
     [SerializeField] [Range(0f, 2f)] float sceneLoadDelay;
 
     [Header("BestScore")]
     public Text bestPlayerName;
     public Text bestScore;
 
-    public static string currentPlayerName;
-
     void Start()
     {
-
-        ShowBestPlayerScoreUIInfo();
+      ShowBestPlayerScoreUIInfo();
+      inputNameSaver = FindObjectOfType<InputUINameSaver>();
     }
-
-    public string StoreName()
-    {
-        string playerName = inputField.text;
-        return playerName;
-    }
-
 
     public void DisplayBestPlayerName(string _name)
     {
@@ -45,34 +37,22 @@ public class MenuUIHandler : MonoBehaviour
 
     public void ShowBestPlayerScoreUIInfo()
     {
-        if (UIScoreManager.Instance != null)
+        if (HighScoreManager.Instance != null)
         {
-            DisplayBestPlayerName(UIScoreManager.Instance.bestScorePlayerName);
-            DisplayScore(UIScoreManager.Instance.bestScore);
+            DisplayBestPlayerName(HighScoreManager.Instance.bestScorePlayerName);
+            DisplayScore(HighScoreManager.Instance.bestScore);
         }
     }
 
 
-    public void NewBestPlayerNameSaved(string _name)
-    {
-        UIScoreManager.Instance.bestScorePlayerName = _name;
-    }
-
-    public void CurentPlayerNameSelected(string _name)
-    {
-        currentPlayerName = _name;
-    }
-
-
-    public void NewBestScoreSaved(int _score)
-    {
-        UIScoreManager.Instance.bestScore = _score;
-    }
-
     public void OnStartButtonClick()
     {
         int mainScene = 1;
-        CurentPlayerNameSelected(StoreName());
+        if (inputNameSaver != null)
+        { 
+            HighScoreManager.Instance.CurentPlayerNameSelected(inputNameSaver.GetInputName()); 
+        }
+
         StartCoroutine(LoadGameRoutine(sceneLoadDelay, mainScene));
     }
 
@@ -90,21 +70,14 @@ public class MenuUIHandler : MonoBehaviour
 
     public void OnQuitToRatingButtonClick()
     {
-        string curName = UIScoreManager.Instance.bestScorePlayerName;
-        int curScore = UIScoreManager.Instance.bestScore;
-        //new ScoreEntry(curName, curScore)
-        ScoreManager.Instance.scores.Add(ScoreManager.Instance.AddScoreEntry(curName, curScore));
-
-        Debug.Log("List Size: " + ScoreManager.Instance.scores.Count); //ScoreManager.Instance.scores.Count
-        ScoreManager.Instance.scores.ForEach(i => Debug.Log(i)); //prints all the values of the list
-
+        InputEntiresHandler.AddEntryToTheList();
         int ratingScene = 2;
         StartCoroutine(LoadGameRoutine(sceneLoadDelay, ratingScene));
     }
 
     public void OnExitButtonClick()
     {
-        UIScoreManager.Instance.SavePlayerData();
+        HighScoreManager.Instance.SavePlayerData();
 
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();

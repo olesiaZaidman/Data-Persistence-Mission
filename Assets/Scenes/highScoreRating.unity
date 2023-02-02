@@ -998,7 +998,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rowUI: {fileID: 490846269669017474, guid: 8bc670a2c64b4984fa2f6d979c576bff, type: 3}
-  rowEntries: []
 --- !u!114 &778875109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1809,7 +1808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19612fd28aa3afe41b3ef82eb95beab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 0}
   sceneLoadDelay: 0.6
   bestPlayerName: {fileID: 511792653}
   bestScore: {fileID: 511792652}

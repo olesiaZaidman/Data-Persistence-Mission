@@ -102,6 +102,8 @@ public class MainManager : MonoBehaviour
 
     public void GameOver() //DeathZone calls this method
     {
+       // HighScoreHandler.AddHighScoreIfPossiable(new HighScoreElement(HighScoreManager.Instance.bestScorePlayerName, HighScoreManager.Instance.bestScore));
+       HighScoreHandler.AddHighScoreIfPossiable(new HighScoreElement(HighScoreManager.currentPlayerName, HighScoreManager.Instance.CurrentScore));
         bestScoreUi.ShowBestPlayerScoreUIInfo();
         isGameOver = true;
         GameOverText.SetActive(true);
